@@ -28,7 +28,7 @@ jobs:
           images: yidadaa/chatgpt-next-web
           tags: |
             type=raw,value=latest
-            type=ref,event=tag
+            type=semver,pattern={{version}}
       
       - 
         name: Set up QEMU
@@ -43,10 +43,9 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/amd64/v8
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-            
